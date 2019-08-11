@@ -1,8 +1,8 @@
 module Sudoku where
 
 import           Control.Lens
-import           Control.Monad.State
-import qualified Data.List           as L
+import           Control.Monad
+import qualified Data.List     as L
 
 type Board = [[Maybe Int]]
 
