@@ -46,6 +46,7 @@ allConstraints board =
           $ ( boxConstraint board <$> [0.. -1+boxSize] ) <*> [0.. -1+boxSize]
     in rows && boxes && cols
 
+findNothing :: Board -> Maybe (Int,Int)
 findNothing b =
   -- Find the next blank space.
   do
@@ -75,13 +76,15 @@ solveSudoku b
   where isDone = (Nothing ==) . findNothing
 
 
-
+justify :: Int -> Maybe Int
 justify n | n==0 = Nothing
           | otherwise = Just n
 
+printBoard :: Board -> IO ()
 printBoard b =
   foldr (>>) (return()) (print <$> b)
 
+validBoard :: [[Int]] -> Bool
 validBoard b =
   all ( (==boxSize*boxSize) . length) b
   && length b == boxSize*boxSize
@@ -104,7 +107,7 @@ getBoard = do
     processLine []    = []
     processLine (h:t) = read [h] : processLine t
 
-
+main :: IO()
 main = do
   putStrLn "Enter your board (one row per line, digits only, 0 counts as blank):"
   board <- ((justify <$>) <$>) <$> getBoard
