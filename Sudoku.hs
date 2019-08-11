@@ -61,9 +61,9 @@ extendBoard b =
   maybeListToList
     $  do
         (row,col) <- findNothing b
-        return $ [1.. boxSize*boxSize] >>= getBoards (row,col)
+        return $ [1.. boxSize*boxSize] >>= extendOnce (row,col)
           where
-            getBoards (row,col) k = do
+            extendOnce (row,col) k = do
               let b' = b & (ix col).(ix row) .~ Just k
               guard $ allConstraints b'
               return b'
